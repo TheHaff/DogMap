@@ -278,7 +278,7 @@ class SearchWorker {
 
   private async initWorker() {
     try {
-      this.worker = new Worker(new URL('./src/worker.ts', import.meta.url), {
+      this.worker = new Worker(new URL('./worker.ts', import.meta.url), {
         type: 'module',
       })
 

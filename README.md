@@ -13,7 +13,6 @@
 This project is in active development and may have breaking changes, bugs, or incomplete features. While it's fun to play with, please don't use it in production environments just yet. We're working hard to make it production-ready, but for now, it's best kept in the backyard for testing and experimentation.
 
 ### What This Means:
-
 - 🚧 **Breaking Changes**: API may change without notice
 - 🐛 **Potential Bugs**: Some features might not work as expected
 - 📚 **Limited Documentation**: Some advanced features may not be fully documented
@@ -37,23 +36,23 @@ DogMap is a generic, searchable map implementation that combines the power of Ja
 ## 🚀 Quick Start
 
 ```typescript
-import DogMap from './dogMap'
+import DogMap from './dogMap';
 
 // Create a new DogMap (it's like getting a new puppy!)
-const dogMap = new DogMap<string>()
+const dogMap = new DogMap<string>();
 
 // Add some data (teaching your dog new tricks)
-await dogMap.set('apple', 'A red fruit')
-await dogMap.set('banana', 'A yellow fruit')
-await dogMap.set('cherry', 'A small red fruit')
+await dogMap.set("apple", "A red fruit");
+await dogMap.set("banana", "A yellow fruit");
+await dogMap.set("cherry", "A small red fruit");
 
 // Search for fruits (your dog finds them instantly!)
-const results = await dogMap.search('berry')
-console.log(results) // ["A purple berry"]
+const results = await dogMap.search("berry");
+console.log(results); // ["A purple berry"]
 
 // Get just the keys
-const keys = await dogMap.keysFor('fruit')
-console.log(keys) // ["apple", "banana", "cherry"]
+const keys = await dogMap.keysFor("fruit");
+console.log(keys); // ["apple", "banana", "cherry"]
 ```
 
 ## 🎮 Advanced Usage
@@ -62,19 +61,19 @@ console.log(keys) // ["apple", "banana", "cherry"]
 
 ```typescript
 // Start a search
-const searchPromise = dogMap.search('a')
+const searchPromise = dogMap.search("a");
 
 // Cancel it if it takes too long (like calling your dog back!)
 setTimeout(async () => {
-  await dogMap.cancelSearch('a')
-  console.log('Search cancelled!')
-}, 1000)
+  await dogMap.cancelSearch("a");
+  console.log("Search cancelled!");
+}, 1000);
 
 try {
-  const results = await searchPromise
-  console.log('Found:', results)
+  const results = await searchPromise;
+  console.log("Found:", results);
 } catch (error) {
-  console.log('Search was cancelled or failed')
+  console.log("Search was cancelled or failed");
 }
 ```
 
@@ -82,66 +81,58 @@ try {
 
 ```typescript
 interface User {
-  name: string
-  age: number
-  email: string
+  name: string;
+  age: number;
+  email: string;
 }
 
-const userMap = new DogMap<User>()
+const userMap = new DogMap<User>();
 
-await userMap.set('john_doe', {
-  name: 'John Doe',
-  age: 30,
-  email: 'john@example.com',
-})
-await userMap.set('jane_smith', {
-  name: 'Jane Smith',
-  age: 25,
-  email: 'jane@example.com',
-})
+await userMap.set("john_doe", { name: "John Doe", age: 30, email: "john@example.com" });
+await userMap.set("jane_smith", { name: "Jane Smith", age: 25, email: "jane@example.com" });
 
 // Search by username
-const users = await userMap.search('john')
-console.log(users) // [{ name: "John Doe", age: 30, email: "john@example.com" }]
+const users = await userMap.search("john");
+console.log(users); // [{ name: "John Doe", age: 30, email: "john@example.com" }]
 ```
 
 ## 🛠️ API Reference
 
 ### Core Methods
 
-| Method                   | Description                       | Returns             |
-| ------------------------ | --------------------------------- | ------------------- |
-| `set(key, value)`        | Add a key-value pair              | `Promise<void>`     |
-| `get(key)`               | Get a value by key                | `T \| undefined`    |
-| `remove(key)`            | Remove a key-value pair           | `Promise<void>`     |
-| `search(query)`          | Search for keys and return values | `Promise<T[]>`      |
-| `keysFor(query)`         | Search for keys only              | `Promise<string[]>` |
-| `cancelSearch(searchId)` | Cancel an ongoing search          | `Promise<void>`     |
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `set(key, value)` | Add a key-value pair | `Promise<void>` |
+| `get(key)` | Get a value by key | `T \| undefined` |
+| `remove(key)` | Remove a key-value pair | `Promise<void>` |
+| `search(query)` | Search for keys and return values | `Promise<T[]>` |
+| `keysFor(query)` | Search for keys only | `Promise<string[]>` |
+| `cancelSearch(searchId)` | Cancel an ongoing search | `Promise<void>` |
 
 ### Utility Methods
 
-| Method      | Description             | Returns                         |
-| ----------- | ----------------------- | ------------------------------- |
-| `has(key)`  | Check if key exists     | `boolean`                       |
-| `size()`    | Get number of items     | `number`                        |
-| `clear()`   | Remove all items        | `void`                          |
-| `destroy()` | Clean up resources      | `void`                          |
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `has(key)` | Check if key exists | `boolean` |
+| `size()` | Get number of items | `number` |
+| `clear()` | Remove all items | `void` |
+| `destroy()` | Clean up resources | `void` |
 | `entries()` | Get all key-value pairs | `IterableIterator<[string, T]>` |
-| `keys()`    | Get all keys            | `IterableIterator<string>`      |
-| `values()`  | Get all values          | `IterableIterator<T>`           |
+| `keys()` | Get all keys | `IterableIterator<string>` |
+| `values()` | Get all values | `IterableIterator<T>` |
 
 ## 🏗️ Architecture
 
 DogMap is built with a clever architecture that separates concerns:
 
 ```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   DogMap<T>     │    │  SearchWorker    │    │  Web Worker     │
-│                 │    │                  │    │                 │
-│ • Map storage   │◄──►│ • Worker mgmt    │◄──►│ • WASM search   │
+┌─────────────────┐    ┌───────────────────┐    ┌─────────────────┐
+│   DogMap<T>     │    │  SearchWorker     │    │  Web Worker     │
+│                 │    │                   │    │                 │
+│ • Map storage   │◄──►│ • Worker mgmt     │◄──►│ • WASM search   │
 │ • Type safety   │    │ • Message handling│    │ • Fuzzy matching│
 │ • API interface │    │ • Callback mgmt   │    │ • Protobuf      │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
+└─────────────────┘    └───────────────────┘    └─────────────────┘
 ```
 
 ### How It Works
@@ -204,7 +195,7 @@ pnpm lint:fix
 
 ## 🤝 Contributing
 
-Found a bug? Want to add a feature? Contributions are welcome!
+Found a bug? Want to add a feature? Contributions are welcome! 
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -226,3 +217,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Remember**: Like a good dog, DogMap is loyal, fast, and always ready to help you find what you're looking for! 🐕✨
+

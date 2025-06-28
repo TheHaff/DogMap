@@ -2,8 +2,8 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { atom, useAtom } from 'jotai'
 import React from 'react'
 
-import DogMap from '../../dogMap'
 import { fkr } from '../../../test/fkr'
+import DogMap from '../../dogMap'
 
 // Atoms
 const queryAtom = atom('')

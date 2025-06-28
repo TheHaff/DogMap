@@ -1,6 +1,4 @@
 import UnpluginTypia from '@ryoppippi/unplugin-typia/vite'
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
 import wasm from 'vite-plugin-wasm'
 import { defineConfig } from 'vitest/config'
 
@@ -10,13 +8,16 @@ export default defineConfig({
   build: {
     target: 'esnext',
   },
-  optimizeDeps: {
-    exclude: ['@faker-js/faker'],
-  },
-  plugins: [tailwindcss(), react(), wasm(), UnpluginTypia()],
+  plugins: [wasm(), UnpluginTypia()],
   publicDir: 'search-worker/pkg',
   test: {
-    environment: 'node',
+    browser: {
+      enabled: true,
+      headless: true,
+      // at least one instance is required
+      instances: [{ browser: 'chromium' }],
+      provider: 'playwright', // or 'webdriverio'
+    },
     globals: true,
     sequence: {
       concurrent: true,

@@ -136,7 +136,7 @@ class MockWorker {
 }
 
 // Mock the global Worker constructor
-global.Worker = MockWorker as unknown as typeof Worker
+globalThis.Worker = MockWorker as unknown as typeof Worker
 
 describe('DogMap', () => {
   // Remove shared dogMap instance - each test will create its own
