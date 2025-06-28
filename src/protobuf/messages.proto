@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package search;
+
+// Message types enum
+enum MessageType {
+  UNKNOWN = 0;
+  ADD_STRINGS = 1;
+  REMOVE_STRINGS = 2;
+  SEARCH = 3;
+  CANCEL_SEARCH = 4;
+  SEARCH_RESULTS = 5;
+  SEARCH_CANCELLED = 6;
+  STRINGS_ADDED = 7;
+  STRINGS_REMOVED = 8;
+  ERROR = 9;
+  LOG = 10;
+  CLEAR = 11;
+}
+
+// Main message wrapper
+message Message {
+  MessageType type = 1;
+  bytes payload = 2;
+}
+
+// Search request
+message SearchRequest {
+  string query = 1;
+  string search_id = 2;
+}
+
+// Search results
+message SearchResults {
+  repeated string results = 1;
+  string search_id = 2;
+}
+
+// String list (for ADD_STRINGS and REMOVE_STRINGS)
+message StringList {
+  repeated string strings = 1;
+}
+
+// Error message
+message ErrorMessage {
+  string message = 1;
+}
+
+// Log message
+message LogMessage {
+  string message = 1;
+}
+
+// Simple response (for operations that just return a count)
+message CountResponse {
+  uint32 count = 1;
+} 
